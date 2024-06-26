@@ -54,3 +54,20 @@ jobs:
         uses: ./
         with:
           github-token: ${{ steps.get-github-app-token.outputs.token }}
+
+  test-with-classic-personal-access-token:
+    name: Test with Classic Personal Access Token
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        if: ${{ github.event_name != 'workflow_run' }}
+
+      - uses: actions/checkout@v4
+        if: ${{ github.event_name == 'workflow_run' }}
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+
+      - name: Test with GitHub Actions token
+        uses: ./
+        with:
+          github-token: ${{ secrets.CLASSIC_PERSONAL_ACCESS_TOKEN }}
