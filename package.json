@@ -1,7 +1,7 @@
 {
-  "name": "typescript-github-action-template",
+  "name": "token-who-am-i",
   "version": "0.1.18",
-  "description": "A template to create custom GitHub Action with TypeScript/JavaScript.",
+  "description": "Retrieve identity information behind the GitHub token.",
   "main": "lib/index.js",
   "types": "lib/index.d.js",
   "type": "module",

@@ -1,11 +1,47 @@
-# Typescript GitHub Action Template
+# token-who-am-i-action
 
-A template to create custom GitHub Action with TypeScript/JavaScript.
+As a GitHub Actions author, have you received GitHub token and tried to act on behave of the identity behind that token without knowing who that was? This GitHub Action helps you retrieve the identity information behind a GitHub token.
 
-## Secrets
+The information available from outputs:
 
-The following secrets need to be set up before you can use workflows already defined in this template:
+1. `login`: It's commonly known as the username, e.g. my `login` is `CatChen`. When it's a bot (aka a GitHub App) `login` has a `[bot]` suffix, e.g. `github-actions[bot]`.
+2. `global-id`: It's a unique id across all different GitHub object types. It's mainly used in GraphQL's `ID` type. It matches `node_id` field in some REST API.
+3. `id`: A user or bot's id in the users table. A bot will have a different id from the bots table but it's rarely used.
+4. `name`: A user or bot's display name. It's optional for users but not for bots.
+5. `email`: A user's email if the user chose to make it visible to the public, or a bot's email constructed by GitHub's rules, e.g. `41898282+github-actions[bot]@users.noreply.github.com`.
+6. `type`: Either `User` or `Bot`. Other less common types are not supported.
+7. `app-slug`: The bot's username that's used in it's URL. It doesn't have the `[bot]` suffix. That's how it's different from `login`.
 
-- **`CHECK_GIT_STATUS_BOT_APP_ID`** and **`CHECK_GIT_STATUS_BOT_APP_PRIVATE_KEY`**: Used by the [`Build` workflow](https://github.com/CatChen/typescript-github-action-template/blob/main/.github/workflows/build.yml). If you don't want to set up a bot you can remove the `actions/create-github-app-token` step and remove all references to `steps.get-github-app-token.outputs.token`.
-- **`ACCEPT_TO_SHIP_BOT_APP_ID`** and **`ACCEPT_TO_SHIP_BOT_APP_PRIVATE_KEY`**: Used by the [`Ship` workflow](https://github.com/CatChen/typescript-github-action-template/blob/main/.github/workflows/ship.yml). If you don't want to set up a bot you can remove the two `actions/create-github-app-token` steps and remove all references to `steps.get-github-app-token.outputs.token`.
-- **`NPM_TOKEN`**: Used by the [`Release` workflow](https://github.com/CatChen/typescript-github-action-template/blob/main/.github/workflows/release.yml). This is necessary for publishing the NPM package to NPM. If you don't want to publish to NPM you can remove the `publish` job.
+## Usage
+
+When writing a [composite action](https://docs.github.com/en/actions/creating-actions/creating-a-composite-action), use this action as a step to retrieve a token's identity information:
+
+```yaml
+runs:
+  using: 'composite'
+  steps:
+    - uses: CatChen/token-who-am-i-action@v0.1
+      id: token-who-am-i
+      with:
+        github-token: ${{ inputs.github-token }}
+
+    - shell: bash
+      env:
+        LOGIN: ${{ steps.token-who-am-i.outputs.login }}
+        GLOBAL_ID: ${{ steps.token-who-am-i.outputs.global-id }}
+        ID: ${{ steps.token-who-am-i.outputs.id }}
+        NAME: ${{ steps.token-who-am-i.outputs.name }}
+        EMAIL: ${{ steps.token-who-am-i.outputs.email }}
+        TYPE: ${{ steps.token-who-am-i.outputs.type }}
+        APP_SLUG: ${{ steps.token-who-am-i.outputs.app-slug }}
+      run: |
+        echo "Login is $LOGIN"
+        echo "Global id is $GLOBAL_ID"
+        echo "Id is $ID"
+        echo "Name is $NAME"
+        echo "Email is $EMAIL"
+        echo "Type is $TYPE"
+        echo "App slug is $APP_SLUG"
+```
+
+When creating a [JavaScript action](https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action), install the `token-who-am-i-action` package and use it to get the same information.
