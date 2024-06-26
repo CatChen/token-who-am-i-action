@@ -1,5 +1,5 @@
 name: 'Token Who Am I'
-description: 'Retrieve identity information about the GitHub token'
+description: 'Retrieve identity information behind the GitHub token'
 inputs:
   github-token:
     description: 'GitHub token.'
