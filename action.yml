@@ -1,4 +1,4 @@
-name: 'Who Am I'
+name: 'Token Who Am I'
 description: 'Retrieve identity information about the GitHub token'
 inputs:
   github-token:
