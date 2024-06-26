@@ -46,5 +46,10 @@ export function getOctokit() {
       },
     }),
   );
+  octokit.graphql = octokit.graphql.defaults({
+    headers: {
+      'X-GitHub-Next-Global-ID': 1,
+    },
+  });
   return octokit;
 }

@@ -30971,6 +30971,11 @@ function getOctokit() {
             doNotRetry: ['429'],
         },
     }));
+    octokit.graphql = octokit.graphql.defaults({
+        headers: {
+            'X-GitHub-Next-Global-ID': 1,
+        },
+    });
     return octokit;
 }
 
@@ -31004,9 +31009,7 @@ function run() {
           global_id: id
         }
       }
-    `, {
-            headers: { 'X-Github-Next-Global-ID': 1 },
-        });
+    `, {});
         (0, core_1.notice)(`Login: ${login}`);
         (0, core_1.notice)(`Global ID: ${globalId}`);
         const { data: { id, name, email, type }, } = yield octokit.rest.users.getByUsername({ username: login });
@@ -31035,7 +31038,6 @@ function run() {
         }
       `, {
                 global_id: globalId,
-                headers: { 'X-Github-Next-Global-ID': 1 },
             });
             (0, core_1.notice)(`App Slug: ${appSlug}`);
             const { data: { name: botName, id: botId }, } = yield octokit.rest.apps.getBySlug({ app_slug: appSlug });
