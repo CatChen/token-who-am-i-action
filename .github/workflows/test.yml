@@ -25,9 +25,62 @@ jobs:
           ref: ${{ github.event.workflow_run.head_branch }}
 
       - name: Test with GitHub Actions token
+        id: test
         uses: ./
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Verify
+        env:
+          LOGIN: ${{ steps.test.outputs.login }}
+          GLOBAL_ID: ${{ steps.test.outputs.global-id }}
+          ID: ${{ steps.test.outputs.id }}
+          NAME: ${{ steps.test.outputs.name }}
+          EMAIL: ${{ steps.test.outputs.email }}
+          TYPE: ${{ steps.test.outputs.type }}
+          APP_SLUG: ${{ steps.test.outputs.app-slug }}
+        run: |
+          if [[ "$LOGIN" != "github-actions[bot]" ]]
+          then
+            echo "::error::Login should be github-actions[bot]"
+            exit 1
+          fi
+
+          if [[ "$GLOBAL_ID" != "BOT_kgDOAn9RKg" ]]
+          then
+            echo "::error::Global ID should be BOT_kgDOAn9RKg"
+            exit 1
+          fi
+
+          if [[ "$ID" != "41898282" ]]
+          then
+            echo "::error::ID should be 41898282"
+            exit 1
+          fi
+
+          if [[ "$NAME" != "GitHub Actions" ]]
+          then
+            echo "::error::Name should be GitHub Actions"
+            exit 1
+          fi
+
+          if [[ "$EMAIL" != "41898282+github-actions[bot]@users.noreply.github.com" ]]
+          then
+            echo "::error::Email should be 41898282+github-actions[bot]@users.noreply.github.com"
+            exit 1
+          fi
+
+          if [[ "$TYPE" != "Bot" ]]
+          then
+            echo "::error::Type should be Bot"
+            exit 1
+          fi
+
+          if [[ "$APP_SLUG" != "github-actions" ]]
+          then
+            echo "::error::App Slug should be github-actions"
+            exit 1
+          fi
 
   test-with-user-app-installation-token:
     name: Test with User App Installation Token
@@ -52,9 +105,62 @@ jobs:
           token: ${{ steps.get-github-app-token.outputs.token }}
 
       - name: Test
+        id: test
         uses: ./
         with:
           github-token: ${{ steps.get-github-app-token.outputs.token }}
+
+      - name: Verify
+        env:
+          LOGIN: ${{ steps.test.outputs.login }}
+          GLOBAL_ID: ${{ steps.test.outputs.global-id }}
+          ID: ${{ steps.test.outputs.id }}
+          NAME: ${{ steps.test.outputs.name }}
+          EMAIL: ${{ steps.test.outputs.email }}
+          TYPE: ${{ steps.test.outputs.type }}
+          APP_SLUG: ${{ steps.test.outputs.app-slug }}
+        run: |
+          if [[ "$LOGIN" != "check-git-status-bot[bot]" ]]
+          then
+            echo "::error::Login should be check-git-status-bot[bot]"
+            exit 1
+          fi
+
+          if [[ "$GLOBAL_ID" != "BOT_kgDOCkb36Q" ]]
+          then
+            echo "::error::Global ID should be BOT_kgDOCkb36Q"
+            exit 1
+          fi
+
+          if [[ "$ID" != "172423145" ]]
+          then
+            echo "::error::ID should be 172423145"
+            exit 1
+          fi
+
+          if [[ "$NAME" != "Check Git Status Bot" ]]
+          then
+            echo "::error::Name should be Check Git Status Bot"
+            exit 1
+          fi
+
+          if [[ "$EMAIL" != "172423145+check-git-status-bot[bot]@users.noreply.github.com" ]]
+          then
+            echo "::error::Email should be 172423145+check-git-status-bot[bot]@users.noreply.github.com"
+            exit 1
+          fi
+
+          if [[ "$TYPE" != "Bot" ]]
+          then
+            echo "::error::Type should be Bot"
+            exit 1
+          fi
+
+          if [[ "$APP_SLUG" != "check-git-status-bot" ]]
+          then
+            echo "::error::App Slug should be check-git-status-bot"
+            exit 1
+          fi
 
   test-with-repo-app-installation-token:
     name: Test with Repo App Installation Token
@@ -78,9 +184,62 @@ jobs:
           token: ${{ steps.get-github-app-token.outputs.token }}
 
       - name: Test
+        id: test
         uses: ./
         with:
           github-token: ${{ steps.get-github-app-token.outputs.token }}
+
+      - name: Verify
+        env:
+          LOGIN: ${{ steps.test.outputs.login }}
+          GLOBAL_ID: ${{ steps.test.outputs.global-id }}
+          ID: ${{ steps.test.outputs.id }}
+          NAME: ${{ steps.test.outputs.name }}
+          EMAIL: ${{ steps.test.outputs.email }}
+          TYPE: ${{ steps.test.outputs.type }}
+          APP_SLUG: ${{ steps.test.outputs.app-slug }}
+        run: |
+          if [[ "$LOGIN" != "check-git-status-bot[bot]" ]]
+          then
+            echo "::error::Login should be check-git-status-bot[bot]"
+            exit 1
+          fi
+
+          if [[ "$GLOBAL_ID" != "BOT_kgDOCkb36Q" ]]
+          then
+            echo "::error::Global ID should be BOT_kgDOCkb36Q"
+            exit 1
+          fi
+
+          if [[ "$ID" != "172423145" ]]
+          then
+            echo "::error::ID should be 172423145"
+            exit 1
+          fi
+
+          if [[ "$NAME" != "Check Git Status Bot" ]]
+          then
+            echo "::error::Name should be Check Git Status Bot"
+            exit 1
+          fi
+
+          if [[ "$EMAIL" != "172423145+check-git-status-bot[bot]@users.noreply.github.com" ]]
+          then
+            echo "::error::Email should be 172423145+check-git-status-bot[bot]@users.noreply.github.com"
+            exit 1
+          fi
+
+          if [[ "$TYPE" != "Bot" ]]
+          then
+            echo "::error::Type should be Bot"
+            exit 1
+          fi
+
+          if [[ "$APP_SLUG" != "check-git-status-bot" ]]
+          then
+            echo "::error::App Slug should be check-git-status-bot"
+            exit 1
+          fi
 
   test-with-classic-personal-access-token:
     name: Test with Classic Personal Access Token
@@ -94,7 +253,48 @@ jobs:
         with:
           ref: ${{ github.event.workflow_run.head_branch }}
 
-      - name: Test with GitHub Actions token
+      - name: Test
+        id: test
         uses: ./
         with:
           github-token: ${{ secrets.CLASSIC_PERSONAL_ACCESS_TOKEN }}
+
+      - name: Verify
+        env:
+          LOGIN: ${{ steps.test.outputs.login }}
+          GLOBAL_ID: ${{ steps.test.outputs.global-id }}
+          ID: ${{ steps.test.outputs.id }}
+          NAME: ${{ steps.test.outputs.name }}
+          EMAIL: ${{ steps.test.outputs.email }}
+          TYPE: ${{ steps.test.outputs.type }}
+          APP_SLUG: ${{ steps.test.outputs.app-slug }}
+        run: |
+          if [[ "$LOGIN" != "CatChen" ]]
+          then
+            echo "::error::Login should be CatChen"
+            exit 1
+          fi
+
+          if [[ "$GLOBAL_ID" != "U_kgDOAAG2Lw" ]]
+          then
+            echo "::error::Global ID should be U_kgDOAAG2Lw"
+            exit 1
+          fi
+
+          if [[ "$ID" != "112175" ]]
+          then
+            echo "::error::ID should be 112175"
+            exit 1
+          fi
+
+          if [[ "$NAME" != "Cat Chen" ]]
+          then
+            echo "::error::Name should be Cat Chen"
+            exit 1
+          fi
+
+          if [[ "$EMAIL" != "catchen@catchen.me" ]]
+          then
+            echo "::error::Email should be catchen@catchen.me"
+            exit 1
+          fi

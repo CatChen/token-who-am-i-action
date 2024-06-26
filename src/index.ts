@@ -1,4 +1,4 @@
-import { notice, setFailed } from '@actions/core';
+import { notice, setFailed, setOutput } from '@actions/core';
 import { getOctokit } from './getOctokit';
 
 type User = {
@@ -44,16 +44,22 @@ export async function run(): Promise<User | Bot> {
   );
 
   notice(`Login: ${login}`);
+  setOutput('login', login);
   notice(`Global ID: ${globalId}`);
+  setOutput('global-id', globalId);
 
   const {
     data: { id, name, email, type },
   } = await octokit.rest.users.getByUsername({ username: login });
 
   notice(`Id: ${id}`);
+  setOutput('id', id);
   notice(`Name: ${name}`);
+  setOutput('name', name);
   notice(`Email: ${email}`);
+  setOutput('email', email);
   notice(`Type: ${type}`);
+  setOutput('type', type);
 
   if (type === 'User') {
     return {
@@ -83,16 +89,18 @@ export async function run(): Promise<User | Bot> {
     );
 
     notice(`App Slug: ${appSlug}`);
+    setOutput('app-slug', appSlug);
 
     const {
-      data: { name: botName, id: botId },
+      data: { name: botName },
     } = await octokit.rest.apps.getBySlug({ app_slug: appSlug });
 
     notice(`Bot Name: ${botName}`);
-    notice(`Bot Id: ${botId}`);
+    setOutput('name', botName);
 
-    const botEmail = `$${id}+${login}@users.noreply.github.com`;
+    const botEmail = `${id}+${login}@users.noreply.github.com`;
     notice(`Bot Email: ${botEmail}`);
+    setOutput('email', botEmail);
 
     return {
       login,
