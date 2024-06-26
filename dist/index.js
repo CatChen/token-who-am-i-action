@@ -30945,7 +30945,6 @@ function getOctokit() {
     const githubToken = (0, core_1.getInput)('github-token');
     const Octokit = utils_1.GitHub.plugin(plugin_throttling_1.throttling, plugin_retry_1.retry);
     const octokit = new Octokit((0, utils_1.getOctokitOptions)(githubToken, {
-        headers: { 'X-Github-Next-Global-ID': 1 },
         throttle: {
             onRateLimit: (retryAfter, options, _, retryCount) => {
                 if (retryCount === 0) {
@@ -31005,7 +31004,9 @@ function run() {
           global_id: id
         }
       }
-    `, {});
+    `, {
+            headers: { 'X-Github-Next-Global-ID': 1 },
+        });
         (0, core_1.notice)(`Login: ${login}`);
         (0, core_1.notice)(`Global ID: ${globalId}`);
         const { data: { id, name, email, type }, } = yield octokit.rest.users.getByUsername({ username: login });
@@ -31034,6 +31035,7 @@ function run() {
         }
       `, {
                 global_id: globalId,
+                headers: { 'X-Github-Next-Global-ID': 1 },
             });
             (0, core_1.notice)(`App Slug: ${appSlug}`);
             const { data: { name: botName, id: botId }, } = yield octokit.rest.apps.getBySlug({ app_slug: appSlug });

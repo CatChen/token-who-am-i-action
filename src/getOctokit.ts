@@ -8,7 +8,6 @@ export function getOctokit() {
   const Octokit = GitHub.plugin(throttling, retry);
   const octokit = new Octokit(
     getOctokitOptions(githubToken, {
-      headers: { 'X-Github-Next-Global-ID': 1 },
       throttle: {
         onRateLimit: (retryAfter: number, options, _, retryCount: number) => {
           if (retryCount === 0) {

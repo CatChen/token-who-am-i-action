@@ -40,7 +40,9 @@ export async function run(): Promise<User | Bot> {
         }
       }
     `,
-    {},
+    {
+      headers: { 'X-Github-Next-Global-ID': 1 },
+    },
   );
 
   notice(`Login: ${login}`);
@@ -79,6 +81,7 @@ export async function run(): Promise<User | Bot> {
       `,
       {
         global_id: globalId,
+        headers: { 'X-Github-Next-Global-ID': 1 },
       },
     );
 
