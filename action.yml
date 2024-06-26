@@ -1,15 +1,12 @@
-name: 'TypeScript Github Action Template'
-description: 'A template to create custom GitHub Action with TypeScript/JavaScript.'
+name: 'Who Am I'
+description: 'Retrieve identity information about the GitHub token'
 inputs:
   github-token:
     description: 'GitHub token.'
-    required: false
-    default: ${{ github.token }}
+    required: true
 runs:
   using: 'node20'
   main: 'dist/index.js'
-  post: 'dist/index.js'
-  post-if: always()
 branding:
-  icon: 'box'
-  color: 'yellow'
+  icon: 'users'
+  color: 'gray-dark'

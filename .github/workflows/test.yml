@@ -12,17 +12,45 @@ on:
       - completed
 
 jobs:
-  test:
-    name: Test
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-
-    runs-on: ${{ matrix.os }}
+  test-with-github-actions-token:
+    name: Test with GitHub Actions Token
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        if: ${{ github.event_name != 'workflow_run' }}
+
+      - uses: actions/checkout@v4
+        if: ${{ github.event_name == 'workflow_run' }}
         with:
-          fetch-depth: 0
+          ref: ${{ github.event.workflow_run.head_branch }}
+
+      - name: Test with GitHub Actions token
+        uses: ./
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  test-with-app-installation-token:
+    name: Test with App Installation Token
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/create-github-app-token@v1
+        id: get-github-app-token
+        with:
+          app-id: ${{ secrets.CHECK_GIT_STATUS_BOT_APP_ID }}
+          private-key: ${{ secrets.CHECK_GIT_STATUS_BOT_APP_PRIVATE_KEY }}
+
+      - uses: actions/checkout@v4
+        if: ${{ github.event_name != 'workflow_run' }}
+        with:
+          token: ${{ steps.get-github-app-token.outputs.token }}
+
+      - uses: actions/checkout@v4
+        if: ${{ github.event_name == 'workflow_run' }}
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+          token: ${{ steps.get-github-app-token.outputs.token }}
 
       - name: Test
         uses: ./
+        with:
+          github-token: ${{ steps.get-github-app-token.outputs.token }}
