@@ -1,5 +1,5 @@
 import { getInput, notice, setFailed, setOutput } from '@actions/core';
-import { getOctokit } from './getOctokit';
+import { getOctokit } from './getOctokit.js';
 
 export type User = {
   login: string;
