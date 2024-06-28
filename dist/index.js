@@ -29125,12 +29125,10 @@ exports["default"] = _default;
 
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.getOctokit = getOctokit;
-const core_1 = __nccwpck_require__(2186);
 const utils_1 = __nccwpck_require__(3030);
 const plugin_retry_1 = __nccwpck_require__(2503);
 const plugin_throttling_1 = __nccwpck_require__(3432);
-function getOctokit() {
-    const githubToken = (0, core_1.getInput)('github-token');
+function getOctokit(githubToken) {
     const Octokit = utils_1.GitHub.plugin(plugin_throttling_1.throttling, plugin_retry_1.retry);
     const octokit = new Octokit((0, utils_1.getOctokitOptions)(githubToken, {
         throttle: {
@@ -29184,12 +29182,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.run = run;
+exports.tokenWhoAmI = tokenWhoAmI;
 const core_1 = __nccwpck_require__(2186);
 const getOctokit_1 = __nccwpck_require__(8442);
-function run() {
+function tokenWhoAmI(githubToken) {
     return __awaiter(this, void 0, void 0, function* () {
-        const octokit = (0, getOctokit_1.getOctokit)();
+        const octokit = (0, getOctokit_1.getOctokit)(githubToken);
         const { viewer: { login, global_id: globalId }, } = yield octokit.graphql(`
       query {
         viewer {
@@ -29254,6 +29252,12 @@ function run() {
         else {
             throw new Error(`Unsupported type: ${type}`);
         }
+    });
+}
+function run() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const githubToken = (0, core_1.getInput)('github-token');
+        yield tokenWhoAmI(githubToken);
     });
 }
 run().catch((error) => (0, core_1.setFailed)(error));

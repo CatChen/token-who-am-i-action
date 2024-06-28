@@ -1,4 +1,4 @@
-export declare function getOctokit(): import("@octokit/core").Octokit & import("@octokit/plugin-rest-endpoint-methods/dist-types/types").Api & {
+export declare function getOctokit(githubToken: string): import("@octokit/core").Octokit & import("@octokit/plugin-rest-endpoint-methods/dist-types/types").Api & {
     paginate: import("@octokit/plugin-paginate-rest").PaginateInterface;
 } & {
     retry: {

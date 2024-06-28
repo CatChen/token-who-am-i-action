@@ -1,7 +1,7 @@
-import { notice, setFailed, setOutput } from '@actions/core';
+import { getInput, notice, setFailed, setOutput } from '@actions/core';
 import { getOctokit } from './getOctokit';
 
-type User = {
+export type User = {
   login: string;
   globalId: string;
   id: number;
@@ -16,7 +16,7 @@ type User = {
   type: 'User';
 };
 
-type Bot = {
+export type Bot = {
   login: string;
   appSlug: string;
   globalId: string;
@@ -26,8 +26,10 @@ type Bot = {
   type: 'Bot';
 };
 
-export async function run(): Promise<User | Bot> {
-  const octokit = getOctokit();
+export type Actor = User | Bot;
+
+export async function tokenWhoAmI(githubToken: string): Promise<Actor> {
+  const octokit = getOctokit(githubToken);
 
   const {
     viewer: { login, global_id: globalId },
@@ -114,6 +116,11 @@ export async function run(): Promise<User | Bot> {
   } else {
     throw new Error(`Unsupported type: ${type}`);
   }
+}
+
+async function run(): Promise<void> {
+  const githubToken = getInput('github-token');
+  await tokenWhoAmI(githubToken);
 }
 
 run().catch((error: Error) => setFailed(error));
