@@ -1,13 +1,19 @@
-import { GitHub, getOctokitOptions } from '@actions/github/lib/utils';
+import { GitHub, getOctokitOptions } from '@actions/github/lib/utils.js';
+import { type Octokit } from '@octokit/core/dist-types/index.js';
+import { type PaginateInterface } from '@octokit/plugin-paginate-rest';
+import { type Api } from '@octokit/plugin-rest-endpoint-methods/dist-types/types.js';
 import { retry } from '@octokit/plugin-retry';
 import { throttling } from '@octokit/plugin-throttling';
 
-export function getOctokit(githubToken: string) {
+export function getOctokit(githubToken: string): Octokit &
+  Api & {
+    paginate: PaginateInterface;
+  } {
   const Octokit = GitHub.plugin(throttling, retry);
   const octokit = new Octokit(
     getOctokitOptions(githubToken, {
       throttle: {
-        onRateLimit: (retryAfter: number, options, _, retryCount: number) => {
+        onRateLimit: (retryAfter, options, _, retryCount) => {
           if (retryCount === 0) {
             octokit.log.warn(
               `Request quota exhausted for request ${options.method} ${options.url}`,
@@ -20,12 +26,7 @@ export function getOctokit(githubToken: string) {
             );
           }
         },
-        onSecondaryRateLimit: (
-          retryAfter: number,
-          options,
-          _,
-          retryCount: number,
-        ) => {
+        onSecondaryRateLimit: (retryAfter, options, _, retryCount) => {
           if (retryCount === 0) {
             octokit.log.warn(
               `Abuse detected for request ${options.method} ${options.url}`,
