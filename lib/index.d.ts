@@ -1,4 +1,4 @@
-type User = {
+export type User = {
     login: string;
     globalId: string;
     id: number;
@@ -12,7 +12,7 @@ type User = {
     email?: string;
     type: 'User';
 };
-type Bot = {
+export type Bot = {
     login: string;
     appSlug: string;
     globalId: string;
@@ -21,5 +21,5 @@ type Bot = {
     email: string;
     type: 'Bot';
 };
-export declare function run(): Promise<User | Bot>;
-export {};
+export type Actor = User | Bot;
+export declare function tokenWhoAmI(githubToken: string): Promise<Actor>;
