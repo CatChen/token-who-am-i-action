@@ -1,6 +1,6 @@
 {
   "name": "token-who-am-i",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "description": "Retrieve identity information behind the GitHub token.",
   "main": "lib/index.js",
   "types": "lib/index.d.js",
