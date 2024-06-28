@@ -12,7 +12,7 @@ The information available from outputs:
 6. `type`: Either `User` or `Bot`. Other less common types are not supported.
 7. `app-slug`: The bot's username that's used in it's URL. It doesn't have the `[bot]` suffix. That's how it's different from `login`.
 
-## Usage
+## Usage as a Reusable Action
 
 When writing a [composite action](https://docs.github.com/en/actions/creating-actions/creating-a-composite-action), use this action as a step to retrieve a token's identity information:
 
@@ -44,4 +44,43 @@ runs:
         echo "App slug is $APP_SLUG"
 ```
 
+## Usage as a JavaScript Package
+
 When creating a [JavaScript action](https://docs.github.com/en/actions/creating-actions/creating-a-javascript-action), install the `token-who-am-i-action` package and use it to get the same information.
+
+```bash
+npm i token-who-am-i-action
+```
+
+Use `npm` from above or `yarn` from below to install the `token-who-am-i-action` package.
+
+```bash
+yarn add token-who-am-i-action
+```
+
+Import `tokenWhoAmI` function from the package and call it to retrieve the token identity information:
+
+```TypeScript
+import { tokenWhoAmI } from 'token-who-am-i-action';
+
+const me = await tokenWhoAmI(githubToken);
+const {
+  login,
+  globalId,
+  type,
+} = me;
+if (me.type === 'User') {
+  const {
+    id,
+    name,
+    email,
+  } = me;
+} else if (me.type === 'Bot') {
+  const {
+    appSlug,
+    id,
+    name,
+    email,
+  } = me;
+}
+```
