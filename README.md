@@ -20,7 +20,7 @@ When writing a [composite action](https://docs.github.com/en/actions/creating-ac
 runs:
   using: 'composite'
   steps:
-    - uses: CatChen/token-who-am-i-action@v0.1
+    - uses: CatChen/token-who-am-i-action@v1
       id: token-who-am-i
       with:
         github-token: ${{ inputs.github-token }}
@@ -64,11 +64,13 @@ Import `tokenWhoAmI` function from the package and call it to retrieve the token
 import { tokenWhoAmI } from 'token-who-am-i-action';
 
 const me = await tokenWhoAmI(githubToken);
+
 const {
   login,
   globalId,
   type,
 } = me;
+
 if (me.type === 'User') {
   const {
     id,
