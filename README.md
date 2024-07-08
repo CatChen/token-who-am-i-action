@@ -1,5 +1,10 @@
 # token-who-am-i-action
 
+[![Build](https://github.com/CatChen/token-who-am-i-action/actions/workflows/build.yml/badge.svg?branch=main&event=push)](https://github.com/CatChen/token-who-am-i-action/actions/workflows/build.yml)
+[![Test](https://github.com/CatChen/token-who-am-i-action/actions/workflows/test.yml/badge.svg?branch=main&event=push)](https://github.com/CatChen/token-who-am-i-action/actions/workflows/test.yml)
+[![ESLint](https://github.com/CatChen/token-who-am-i-action/actions/workflows/eslint.yml/badge.svg?branch=main&event=push)](https://github.com/CatChen/token-who-am-i-action/actions/workflows/eslint.yml)
+[![CodeQL](https://github.com/CatChen/token-who-am-i-action/actions/workflows/codeql.yml/badge.svg?branch=main&event=schedule)](https://github.com/CatChen/token-who-am-i-action/actions/workflows/codeql.yml)
+
 As a GitHub Actions author, have you received GitHub token and tried to act on behave of the identity behind that token without knowing who that was? This GitHub Action helps you retrieve the identity information behind a GitHub token.
 
 The information available from outputs:
