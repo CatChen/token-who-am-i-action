@@ -32565,7 +32565,6 @@ var light = __nccwpck_require__(1174);
 // pkg/dist-src/index.js
 
 
-
 // pkg/dist-src/version.js
 var VERSION = "0.0.0-development";
 
