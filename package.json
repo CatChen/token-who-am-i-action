@@ -1,6 +1,6 @@
 {
   "name": "token-who-am-i-action",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Retrieve identity information behind the GitHub token.",
   "main": "dist/index.js",
   "types": "dist/index.d.js",
