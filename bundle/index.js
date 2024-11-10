@@ -33553,6 +33553,7 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 
 function tokenWhoAmI(githubToken) {
     return __awaiter(this, void 0, void 0, function* () {
+        var _a;
         const octokit = getOctokit(githubToken);
         const { viewer: { login, global_id: globalId }, } = yield octokit.graphql(`
       query {
@@ -33566,7 +33567,7 @@ function tokenWhoAmI(githubToken) {
         (0,core.setOutput)('login', login);
         (0,core.notice)(`Global ID: ${globalId}`);
         (0,core.setOutput)('global-id', globalId);
-        const { data: { id, name, email, type }, } = yield octokit.rest.users.getByUsername({ username: login });
+        const { headers: { 'x-oauth-scopes': xOauthScopes }, data: { id, name, email, type }, } = yield octokit.rest.users.getByUsername({ username: login });
         (0,core.notice)(`Id: ${id}`);
         (0,core.setOutput)('id', id);
         (0,core.notice)(`Name: ${name}`);
@@ -33576,12 +33577,18 @@ function tokenWhoAmI(githubToken) {
         (0,core.notice)(`Type: ${type}`);
         (0,core.setOutput)('type', type);
         if (type === 'User') {
+            const scopes = (_a = xOauthScopes === null || xOauthScopes === void 0 ? void 0 : xOauthScopes.split(',').map((scope) => scope.trim())) !== null && _a !== void 0 ? _a : undefined;
+            if (scopes !== undefined) {
+                (0,core.notice)(`Scopes: ${xOauthScopes}`);
+                (0,core.setOutput)('scopes', xOauthScopes);
+            }
             return {
                 login,
                 globalId,
                 id,
                 name: name !== null && name !== void 0 ? name : undefined,
                 email: email !== null && email !== void 0 ? email : undefined,
+                scopes,
                 type,
             };
         }

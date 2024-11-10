@@ -273,7 +273,7 @@ jobs:
           NAME: ${{ steps.test.outputs.name }}
           EMAIL: ${{ steps.test.outputs.email }}
           TYPE: ${{ steps.test.outputs.type }}
-          APP_SLUG: ${{ steps.test.outputs.app-slug }}
+          SCOPES: ${{ steps.test.outputs.scopes }}
         run: |
           if [[ "$LOGIN" != "CatChen" ]]
           then
@@ -302,5 +302,11 @@ jobs:
           if [[ "$EMAIL" != "catchen@catchen.me" ]]
           then
             echo "::error::Email should be catchen@catchen.me"
+            exit 1
+          fi
+
+          if [[ "$SCOPES" != "read:org, repo" ]]
+          then
+            echo "::error::Scopes should be read:org, repo"
             exit 1
           fi
