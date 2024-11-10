@@ -16,6 +16,7 @@ The information available from outputs:
 5. `email`: A user's email if the user chose to make it visible to the public, or a bot's email constructed by GitHub's rules, e.g. `41898282+github-actions[bot]@users.noreply.github.com`.
 6. `type`: Either `User` or `Bot`. Other less common types are not supported.
 7. `app-slug`: The bot's username that's used in it's URL. It doesn't have the `[bot]` suffix. That's how it's different from `login`.
+8. `scopes`: The user's permission scopes, e.g. `read:org, repo`. It's only available if the token is a classic PAT (Personal Access Token). It's not available for fine-grained PAT.
 
 ## Usage as a Reusable Action
 
@@ -39,6 +40,7 @@ runs:
         EMAIL: ${{ steps.token-who-am-i.outputs.email }}
         TYPE: ${{ steps.token-who-am-i.outputs.type }}
         APP_SLUG: ${{ steps.token-who-am-i.outputs.app-slug }}
+        SCOPES: ${{ steps.token-who-am-i.outputs.scopes }}
       run: |
         echo "Login is $LOGIN"
         echo "Global id is $GLOBAL_ID"
@@ -47,6 +49,7 @@ runs:
         echo "Email is $EMAIL"
         echo "Type is $TYPE"
         echo "App slug is $APP_SLUG"
+        echo "Scopes are $SCOPES"
 ```
 
 ## Usage as a JavaScript Package
@@ -81,6 +84,7 @@ if (me.type === 'User') {
     id,
     name,
     email,
+    scopes,
   } = me;
 } else if (me.type === 'Bot') {
   const {
