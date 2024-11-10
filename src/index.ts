@@ -13,6 +13,7 @@ export type User = {
    * May be `undefined` if the user chose to hide their email.
    */
   email?: string;
+  scopes?: Array<string>;
   type: 'User';
 };
 
@@ -51,6 +52,7 @@ export async function tokenWhoAmI(githubToken: string): Promise<Actor> {
   setOutput('global-id', globalId);
 
   const {
+    headers: { 'x-oauth-scopes': xOauthScopes },
     data: { id, name, email, type },
   } = await octokit.rest.users.getByUsername({ username: login });
 
@@ -64,12 +66,20 @@ export async function tokenWhoAmI(githubToken: string): Promise<Actor> {
   setOutput('type', type);
 
   if (type === 'User') {
+    const scopes =
+      xOauthScopes?.split(',').map((scope) => scope.trim()) ?? undefined;
+    if (scopes !== undefined) {
+      notice(`Scopes: ${xOauthScopes}`);
+      setOutput('scopes', xOauthScopes);
+    }
+
     return {
       login,
       globalId,
       id,
       name: name ?? undefined,
       email: email ?? undefined,
+      scopes,
       type,
     };
   } else if (type === 'Bot') {

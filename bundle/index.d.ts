@@ -10,6 +10,7 @@ export type User = {
      * May be `undefined` if the user chose to hide their email.
      */
     email?: string;
+    scopes?: Array<string>;
     type: 'User';
 };
 export type Bot = {
