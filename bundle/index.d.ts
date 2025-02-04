@@ -23,4 +23,6 @@ export type Bot = {
     type: 'Bot';
 };
 export type Actor = User | Bot;
-export declare function tokenWhoAmI(githubToken: string): Promise<Actor>;
+export declare function tokenWhoAmI({ githubToken, }: {
+    githubToken: string;
+}): Promise<Actor>;

@@ -29,7 +29,11 @@ export type Bot = {
 
 export type Actor = User | Bot;
 
-export async function tokenWhoAmI(githubToken: string): Promise<Actor> {
+export async function tokenWhoAmI({
+  githubToken,
+}: {
+  githubToken: string;
+}): Promise<Actor> {
   const octokit = getOctokit(githubToken);
 
   const {
@@ -130,7 +134,7 @@ export async function tokenWhoAmI(githubToken: string): Promise<Actor> {
 
 async function run(): Promise<void> {
   const githubToken = getInput('github-token');
-  await tokenWhoAmI(githubToken);
+  await tokenWhoAmI({ githubToken });
 }
 
 run().catch((error: Error) => setFailed(error));
