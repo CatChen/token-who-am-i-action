@@ -1,4 +1,6 @@
 {
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
   "yaml.schemas": {
     "https://json.schemastore.org/github-action.json": "action.yml",
     "https://json.schemastore.org/github-funding.json": ".github/FUNDING.yml",
@@ -7,5 +9,10 @@
     "https://json.schemastore.org/tsconfig.json": "tsconfig.json",
     "https://json.schemastore.org/eslintrc.json": ".eslintrc.json",
     "https://json.schemastore.org/prettierrc.json": ".prettierrc.json"
+  },
+  "files.exclude": {
+    "**/dist": true,
+    "**/bundle": true,
+    "**/node_modules": true
   }
 }
