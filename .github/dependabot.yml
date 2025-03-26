@@ -4,6 +4,9 @@ updates:
     directory: '/'
     schedule:
       interval: daily
+    ignore:
+      - dependency-name: '@vercel/ncc'
+        versions: ['0.38.*']
     groups:
       types:
         patterns:
@@ -16,9 +19,9 @@ updates:
         patterns:
           - '@actions/*'
     reviewers:
-      - catchen
+      - CatChen
     assignees:
-      - catchen
+      - CatChen
     labels:
       - accept2ship
 
@@ -27,6 +30,6 @@ updates:
     schedule:
       interval: daily
     assignees:
-      - catchen
+      - CatChen
     labels:
       - pass2ship
