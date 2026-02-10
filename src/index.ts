@@ -107,9 +107,15 @@ export async function tokenWhoAmI({
     notice(`App Slug: ${appSlug}`);
     setOutput('app-slug', appSlug);
 
-    const {
-      data: { name: botName },
-    } = await octokit.rest.apps.getBySlug({ app_slug: appSlug });
+    const appResponse = await octokit.rest.apps.getBySlug({
+      app_slug: appSlug,
+    });
+
+    if (!appResponse.data) {
+      throw new Error(`App not found for slug: ${appSlug}.`);
+    }
+
+    const { name: botName } = appResponse.data;
 
     notice(`Bot Name: ${botName}`);
     setOutput('name', botName);
