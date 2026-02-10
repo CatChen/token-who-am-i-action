@@ -37772,7 +37772,7 @@ var src_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argu
 
 function tokenWhoAmI(_a) {
     return src_awaiter(this, arguments, void 0, function* ({ githubToken, }) {
-        var _b, _c, _d;
+        var _b, _c;
         const octokit = getOctokit(githubToken);
         const { viewer: { login, global_id: globalId }, } = yield octokit.graphql(`
       query {
@@ -37828,7 +37828,10 @@ function tokenWhoAmI(_a) {
             const appResponse = yield octokit.rest.apps.getBySlug({
                 app_slug: appSlug,
             });
-            const botName = (_d = (_c = appResponse.data) === null || _c === void 0 ? void 0 : _c.name) !== null && _d !== void 0 ? _d : '';
+            const botName = (_c = appResponse.data) === null || _c === void 0 ? void 0 : _c.name;
+            if (!botName) {
+                throw new Error(`Bot name not found for app slug: ${appSlug}`);
+            }
             notice(`Bot Name: ${botName}`);
             setOutput('name', botName);
             const botEmail = `${id}+${login}@users.noreply.github.com`;
