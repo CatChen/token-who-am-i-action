@@ -17,14 +17,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CatChen/typescript-github-action-template.git"
+    "url": "git+https://github.com/CatChen/token-who-am-i-action.git"
   },
   "author": "Cat Chen",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/CatChen/typescript-github-action-template/issues"
+    "url": "https://github.com/CatChen/token-who-am-i-action/issues"
   },
-  "homepage": "https://github.com/CatChen/typescript-github-action-template#readme",
+  "homepage": "https://github.com/CatChen/token-who-am-i-action#readme",
   "funding": "https://github.com/CatChen/typescript-github-action-template?sponsor=1",
   "devDependencies": {
     "@eslint/eslintrc": "^3.0.2",
