@@ -33344,6 +33344,49 @@ function getIDToken(aud) {
  */
 
 //# sourceMappingURL=core.js.map
+;// CONCATENATED MODULE: ./src/__graphql__/graphql.ts
+class TypedDocumentString extends String {
+    constructor(value, __meta__) {
+        super(value);
+        this.value = value;
+        this.__meta__ = __meta__;
+    }
+    toString() {
+        return this.value;
+    }
+}
+const ViewerIdentityDocument = new TypedDocumentString(`
+    query ViewerIdentity {
+  viewer {
+    login
+    globalId: id
+  }
+}
+    `);
+const BotAppSlugDocument = new TypedDocumentString(`
+    query BotAppSlug($globalId: ID!) {
+  node(id: $globalId) {
+    id
+    __typename
+    ... on Bot {
+      appSlug: login
+    }
+  }
+}
+    `);
+
+;// CONCATENATED MODULE: ./src/__graphql__/gql.ts
+/* eslint-disable */
+
+const documents = {
+    '\n  query ViewerIdentity {\n    viewer {\n      login\n      globalId: id\n    }\n  }\n': ViewerIdentityDocument,
+    '\n  query BotAppSlug($globalId: ID!) {\n    node(id: $globalId) {\n      id\n      __typename\n      ... on Bot {\n        appSlug: login\n      }\n    }\n  }\n': BotAppSlugDocument,
+};
+function graphql(source) {
+    var _a;
+    return (_a = documents[source]) !== null && _a !== void 0 ? _a : {};
+}
+
 ;// CONCATENATED MODULE: ./node_modules/@actions/github/lib/context.js
 
 
@@ -34239,7 +34282,7 @@ var NON_VARIABLE_OPTIONS = [
 ];
 var FORBIDDEN_VARIABLE_OPTIONS = ["query", "method", "url"];
 var GHES_V3_SUFFIX_REGEX = /\/api\/v3\/?$/;
-function graphql(request2, query, options) {
+function dist_bundle_graphql(request2, query, options) {
   if (options) {
     if (typeof query === "string" && "query" in options) {
       return Promise.reject(
@@ -34293,7 +34336,7 @@ function graphql(request2, query, options) {
 function graphql_dist_bundle_withDefaults(request2, newDefaults) {
   const newRequest = request2.defaults(newDefaults);
   const newApi = (query, options) => {
-    return graphql(newRequest, query, options);
+    return dist_bundle_graphql(newRequest, query, options);
   };
   return Object.assign(newApi, {
     defaults: graphql_dist_bundle_withDefaults.bind(null, newRequest),
@@ -37770,18 +37813,31 @@ var src_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argu
 };
 
 
+
+const queryViewerIdentity = graphql(`
+  query ViewerIdentity {
+    viewer {
+      login
+      globalId: id
+    }
+  }
+`);
+const queryBotAppSlug = graphql(`
+  query BotAppSlug($globalId: ID!) {
+    node(id: $globalId) {
+      id
+      __typename
+      ... on Bot {
+        appSlug: login
+      }
+    }
+  }
+`);
 function tokenWhoAmI(_a) {
     return src_awaiter(this, arguments, void 0, function* ({ githubToken, }) {
         var _b;
         const octokit = getOctokit(githubToken);
-        const { viewer: { login, global_id: globalId }, } = yield octokit.graphql(`
-      query {
-        viewer {
-          login
-          global_id: id
-        }
-      }
-    `, {});
+        const { viewer: { login, globalId }, } = yield octokit.graphql(queryViewerIdentity.toString(), {});
         notice(`Login: ${login}`);
         setOutput('login', login);
         notice(`Global ID: ${globalId}`);
@@ -37812,17 +37868,13 @@ function tokenWhoAmI(_a) {
             };
         }
         else if (type === 'Bot') {
-            const { node: { bot_login: appSlug }, } = yield octokit.graphql(`
-        query($global_id: ID!) {
-          node(id: $global_id) {
-            ... on Bot{
-              bot_login: login
-            }
-          }
-        }
-      `, {
-                global_id: globalId,
+            const { node } = yield octokit.graphql(queryBotAppSlug.toString(), {
+                globalId,
             });
+            if (!node || node.__typename !== 'Bot') {
+                throw new Error(`Failed to resolve app slug from bot node: ${globalId}.`);
+            }
+            const { appSlug } = node;
             notice(`App Slug: ${appSlug}`);
             setOutput('app-slug', appSlug);
             const appResponse = yield octokit.rest.apps.getBySlug({

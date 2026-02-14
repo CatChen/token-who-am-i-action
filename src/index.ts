@@ -1,5 +1,28 @@
+import type { ResultOf } from '@graphql-typed-document-node/core';
 import { getInput, notice, setFailed, setOutput } from '@actions/core';
+import { graphql } from './__graphql__/gql.js';
 import { getOctokit } from './getOctokit.js';
+
+const queryViewerIdentity = graphql(`
+  query ViewerIdentity {
+    viewer {
+      login
+      globalId: id
+    }
+  }
+`);
+
+const queryBotAppSlug = graphql(`
+  query BotAppSlug($globalId: ID!) {
+    node(id: $globalId) {
+      id
+      __typename
+      ... on Bot {
+        appSlug: login
+      }
+    }
+  }
+`);
 
 export type User = {
   login: string;
@@ -37,16 +60,9 @@ export async function tokenWhoAmI({
   const octokit = getOctokit(githubToken);
 
   const {
-    viewer: { login, global_id: globalId },
-  } = await octokit.graphql<{ viewer: { login: string; global_id: string } }>(
-    `
-      query {
-        viewer {
-          login
-          global_id: id
-        }
-      }
-    `,
+    viewer: { login, globalId },
+  } = await octokit.graphql<ResultOf<typeof queryViewerIdentity>>(
+    queryViewerIdentity.toString(),
     {},
   );
 
@@ -87,22 +103,18 @@ export async function tokenWhoAmI({
       type,
     };
   } else if (type === 'Bot') {
-    const {
-      node: { bot_login: appSlug },
-    } = await octokit.graphql<{ node: { bot_login: string } }>(
-      `
-        query($global_id: ID!) {
-          node(id: $global_id) {
-            ... on Bot{
-              bot_login: login
-            }
-          }
-        }
-      `,
+    const { node } = await octokit.graphql<ResultOf<typeof queryBotAppSlug>>(
+      queryBotAppSlug.toString(),
       {
-        global_id: globalId,
+        globalId,
       },
     );
+
+    if (!node || node.__typename !== 'Bot') {
+      throw new Error(`Failed to resolve app slug from bot node: ${globalId}.`);
+    }
+
+    const { appSlug } = node;
 
     notice(`App Slug: ${appSlug}`);
     setOutput('app-slug', appSlug);
