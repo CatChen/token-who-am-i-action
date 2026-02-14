@@ -14,12 +14,12 @@ import * as types from './graphql.js';
  */
 type Documents = {
   '\n  query ViewerIdentity {\n    viewer {\n      login\n      globalId: id\n    }\n  }\n': typeof types.ViewerIdentityDocument;
-  '\n  query BotAppSlug($globalId: ID!) {\n    node(id: $globalId) {\n      ... on Bot {\n        appSlug: login\n      }\n    }\n  }\n': typeof types.BotAppSlugDocument;
+  '\n  query BotAppSlug($globalId: ID!) {\n    node(id: $globalId) {\n      id\n      ... on Bot {\n        appSlug: login\n      }\n    }\n  }\n': typeof types.BotAppSlugDocument;
 };
 const documents: Documents = {
   '\n  query ViewerIdentity {\n    viewer {\n      login\n      globalId: id\n    }\n  }\n':
     types.ViewerIdentityDocument,
-  '\n  query BotAppSlug($globalId: ID!) {\n    node(id: $globalId) {\n      ... on Bot {\n        appSlug: login\n      }\n    }\n  }\n':
+  '\n  query BotAppSlug($globalId: ID!) {\n    node(id: $globalId) {\n      id\n      ... on Bot {\n        appSlug: login\n      }\n    }\n  }\n':
     types.BotAppSlugDocument,
 };
 
@@ -33,7 +33,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query BotAppSlug($globalId: ID!) {\n    node(id: $globalId) {\n      ... on Bot {\n        appSlug: login\n      }\n    }\n  }\n',
+  source: '\n  query BotAppSlug($globalId: ID!) {\n    node(id: $globalId) {\n      id\n      ... on Bot {\n        appSlug: login\n      }\n    }\n  }\n',
 ): typeof import('./graphql.js').BotAppSlugDocument;
 
 export function graphql(source: string) {

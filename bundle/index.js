@@ -33366,6 +33366,7 @@ const ViewerIdentityDocument = new TypedDocumentString(`
 const BotAppSlugDocument = new TypedDocumentString(`
     query BotAppSlug($globalId: ID!) {
   node(id: $globalId) {
+    id
     ... on Bot {
       appSlug: login
     }
@@ -33378,7 +33379,7 @@ const BotAppSlugDocument = new TypedDocumentString(`
 
 const documents = {
     '\n  query ViewerIdentity {\n    viewer {\n      login\n      globalId: id\n    }\n  }\n': ViewerIdentityDocument,
-    '\n  query BotAppSlug($globalId: ID!) {\n    node(id: $globalId) {\n      ... on Bot {\n        appSlug: login\n      }\n    }\n  }\n': BotAppSlugDocument,
+    '\n  query BotAppSlug($globalId: ID!) {\n    node(id: $globalId) {\n      id\n      ... on Bot {\n        appSlug: login\n      }\n    }\n  }\n': BotAppSlugDocument,
 };
 function graphql(source) {
     var _a;
@@ -37823,6 +37824,7 @@ const queryViewerIdentity = graphql(`
 const queryBotAppSlug = graphql(`
   query BotAppSlug($globalId: ID!) {
     node(id: $globalId) {
+      id
       ... on Bot {
         appSlug: login
       }

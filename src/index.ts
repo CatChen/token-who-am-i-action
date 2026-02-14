@@ -15,6 +15,7 @@ const queryViewerIdentity = graphql(`
 const queryBotAppSlug = graphql(`
   query BotAppSlug($globalId: ID!) {
     node(id: $globalId) {
+      id
       ... on Bot {
         appSlug: login
       }
