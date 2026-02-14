@@ -5,4 +5,4 @@ export declare function graphql(source: '\n  query ViewerIdentity {\n    viewer 
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export declare function graphql(source: '\n  query BotAppSlug($globalId: ID!) {\n    node(id: $globalId) {\n      id\n      ... on Bot {\n        appSlug: login\n      }\n    }\n  }\n'): typeof import('./graphql.js').BotAppSlugDocument;
+export declare function graphql(source: '\n  query BotAppSlug($globalId: ID!) {\n    node(id: $globalId) {\n      id\n      __typename\n      ... on Bot {\n        appSlug: login\n      }\n    }\n  }\n'): typeof import('./graphql.js').BotAppSlugDocument;

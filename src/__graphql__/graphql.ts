@@ -36637,6 +36637,7 @@ export const BotAppSlugDocument = new TypedDocumentString(`
     query BotAppSlug($globalId: ID!) {
   node(id: $globalId) {
     id
+    __typename
     ... on Bot {
       appSlug: login
     }
