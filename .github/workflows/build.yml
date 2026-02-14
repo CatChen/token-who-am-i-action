@@ -43,10 +43,13 @@ jobs:
       - name: Install dependencies
         run: yarn
 
+      - name: Codegen
+        run: yarn codegen
+
       - name: Reformat
         run: |
           yarn prettier --write .
-          yarn lint --fix
+          yarn lint --fix || true # Ignore errors and leave them to the ESLint workflow
 
       - name: Build
         run: yarn build
