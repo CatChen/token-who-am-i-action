@@ -1,4 +1,8 @@
-export type User = {
+import { type TokenKind } from './tokenKind.js';
+export type BaseActor = {
+    tokenKind: TokenKind;
+};
+export type User = BaseActor & {
     login: string;
     globalId: string;
     id: number;
@@ -13,7 +17,7 @@ export type User = {
     scopes?: Array<string>;
     type: 'User';
 };
-export type Bot = {
+export type Bot = BaseActor & {
     login: string;
     appSlug: string;
     globalId: string;

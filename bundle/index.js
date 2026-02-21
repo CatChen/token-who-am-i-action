@@ -37805,6 +37805,26 @@ function getOctokit(githubToken) {
     return octokit;
 }
 
+;// CONCATENATED MODULE: ./src/tokenKind.ts
+function detectTokenKind(token) {
+    if (token.startsWith('ghp_')) {
+        return 'pat-classic';
+    }
+    if (token.startsWith('github_pat_')) {
+        return 'pat-fine-grained';
+    }
+    if (token.startsWith('gho_')) {
+        return 'oauth-access-token';
+    }
+    if (token.startsWith('ghu_')) {
+        return 'github-app-user-access-token';
+    }
+    if (token.startsWith('ghs_')) {
+        return 'github-app-installation-access-token';
+    }
+    return 'unknown';
+}
+
 ;// CONCATENATED MODULE: ./src/index.ts
 var src_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -37815,6 +37835,7 @@ var src_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argu
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+
 
 
 
@@ -37841,6 +37862,9 @@ function tokenWhoAmI(_a) {
     return src_awaiter(this, arguments, void 0, function* ({ githubToken, }) {
         var _b;
         const octokit = getOctokit(githubToken);
+        const tokenKind = detectTokenKind(githubToken);
+        notice(`Token Kind: ${tokenKind}`);
+        setOutput('token-kind', tokenKind);
         const { viewer: { login, globalId }, } = yield octokit.graphql(queryViewerIdentity.toString(), {});
         notice(`Login: ${login}`);
         setOutput('login', login);
@@ -37869,6 +37893,7 @@ function tokenWhoAmI(_a) {
                 email: email !== null && email !== void 0 ? email : undefined,
                 scopes,
                 type,
+                tokenKind,
             };
         }
         else if (type === 'Bot') {
@@ -37901,6 +37926,7 @@ function tokenWhoAmI(_a) {
                 name: botName,
                 email: botEmail,
                 type,
+                tokenKind,
             };
         }
         else {
