@@ -4,6 +4,23 @@ inputs:
   github-token:
     description: 'GitHub token.'
     required: true
+outputs:
+  login:
+    description: 'Username or bot login behind the token.'
+  global-id:
+    description: 'Global GraphQL ID of the identity behind the token.'
+  id:
+    description: 'Numeric user ID of the identity behind the token.'
+  name:
+    description: 'Display name of the identity behind the token.'
+  email:
+    description: 'Public email (user) or generated noreply email (bot).'
+  type:
+    description: 'Identity type. Either User or Bot.'
+  app-slug:
+    description: 'GitHub App slug when the identity type is Bot.'
+  scopes:
+    description: 'Classic PAT scopes from x-oauth-scopes response header, when available.'
 runs:
   using: 'node24'
   main: 'bundle/index.js'
