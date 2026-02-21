@@ -17,6 +17,8 @@ The information available from outputs:
 6. `type`: Either `User` or `Bot`. Other less common types are not supported.
 7. `app-slug`: The bot's username that's used in it's URL. It doesn't have the `[bot]` suffix. That's how it's different from `login`.
 8. `scopes`: The user's permission scopes, e.g. `read:org, repo`. It's only available if the token is a classic PAT (Personal Access Token). It's not available for fine-grained PAT.
+9. `token-kind`: Token type detected from token prefix. Possible values are `pat-classic` (`ghp_`), `pat-fine-grained` (`github_pat_`), `oauth-access-token` (`gho_`), `github-app-user-access-token` (`ghu_`), `github-app-installation-access-token` (`ghs_`), and `unknown` for legacy or unrecognized formats.
+   `GITHUB_TOKEN` is a GitHub App installation token, so this output is typically `github-app-installation-access-token`.
 
 ## Usage as a Reusable Action
 
@@ -41,6 +43,7 @@ runs:
         TYPE: ${{ steps.token-who-am-i.outputs.type }}
         APP_SLUG: ${{ steps.token-who-am-i.outputs.app-slug }}
         SCOPES: ${{ steps.token-who-am-i.outputs.scopes }}
+        TOKEN_KIND: ${{ steps.token-who-am-i.outputs.token-kind }}
       run: |
         echo "Login is $LOGIN"
         echo "Global id is $GLOBAL_ID"
@@ -50,6 +53,7 @@ runs:
         echo "Type is $TYPE"
         echo "App slug is $APP_SLUG"
         echo "Scopes are $SCOPES"
+        echo "Token kind is $TOKEN_KIND"
 ```
 
 ## Usage as a JavaScript Package
@@ -77,6 +81,7 @@ const {
   login,
   globalId,
   type,
+  tokenKind,
 } = me;
 
 if (me.type === 'User') {
