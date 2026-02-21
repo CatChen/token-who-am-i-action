@@ -42,6 +42,7 @@ jobs:
           EMAIL: ${{ steps.test.outputs.email }}
           TYPE: ${{ steps.test.outputs.type }}
           APP_SLUG: ${{ steps.test.outputs.app-slug }}
+          TOKEN_KIND: ${{ steps.test.outputs.token-kind }}
         run: |
           if [[ "$LOGIN" != "github-actions[bot]" ]]
           then
@@ -85,6 +86,12 @@ jobs:
             exit 1
           fi
 
+          if [[ "$TOKEN_KIND" != "github-app-installation-access-token" ]]
+          then
+            echo "::error::Token kind should be github-app-installation-access-token"
+            exit 1
+          fi
+
   test-with-user-app-installation-token:
     name: Test with User App Installation Token
     if: ${{ !startsWith(github.head_ref || github.event.workflow_run.head_branch, 'workflows/tests/') }}
@@ -123,6 +130,7 @@ jobs:
           EMAIL: ${{ steps.test.outputs.email }}
           TYPE: ${{ steps.test.outputs.type }}
           APP_SLUG: ${{ steps.test.outputs.app-slug }}
+          TOKEN_KIND: ${{ steps.test.outputs.token-kind }}
         run: |
           if [[ "$LOGIN" != "check-git-status-bot[bot]" ]]
           then
@@ -163,6 +171,12 @@ jobs:
           if [[ "$APP_SLUG" != "check-git-status-bot" ]]
           then
             echo "::error::App Slug should be check-git-status-bot"
+            exit 1
+          fi
+
+          if [[ "$TOKEN_KIND" != "github-app-installation-access-token" ]]
+          then
+            echo "::error::Token kind should be github-app-installation-access-token"
             exit 1
           fi
 
@@ -203,6 +217,7 @@ jobs:
           EMAIL: ${{ steps.test.outputs.email }}
           TYPE: ${{ steps.test.outputs.type }}
           APP_SLUG: ${{ steps.test.outputs.app-slug }}
+          TOKEN_KIND: ${{ steps.test.outputs.token-kind }}
         run: |
           if [[ "$LOGIN" != "check-git-status-bot[bot]" ]]
           then
@@ -246,6 +261,12 @@ jobs:
             exit 1
           fi
 
+          if [[ "$TOKEN_KIND" != "github-app-installation-access-token" ]]
+          then
+            echo "::error::Token kind should be github-app-installation-access-token"
+            exit 1
+          fi
+
   test-with-classic-personal-access-token:
     name: Test with Classic Personal Access Token
     if: ${{ !startsWith(github.head_ref || github.event.workflow_run.head_branch, 'workflows/tests/') }}
@@ -274,6 +295,7 @@ jobs:
           EMAIL: ${{ steps.test.outputs.email }}
           TYPE: ${{ steps.test.outputs.type }}
           SCOPES: ${{ steps.test.outputs.scopes }}
+          TOKEN_KIND: ${{ steps.test.outputs.token-kind }}
         run: |
           if [[ "$LOGIN" != "CatChen" ]]
           then
@@ -308,5 +330,11 @@ jobs:
           if [[ "$SCOPES" != "read:org, repo" ]]
           then
             echo "::error::Scopes should be read:org, repo"
+            exit 1
+          fi
+
+          if [[ "$TOKEN_KIND" != "pat-classic" ]]
+          then
+            echo "::error::Token kind should be pat-classic"
             exit 1
           fi

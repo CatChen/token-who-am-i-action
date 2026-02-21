@@ -21,6 +21,8 @@ outputs:
     description: 'GitHub App slug when the identity type is Bot.'
   scopes:
     description: 'Classic PAT scopes from x-oauth-scopes response header, when available.'
+  token-kind:
+    description: 'Token type detected by token format prefix.'
 runs:
   using: 'node24'
   main: 'bundle/index.js'

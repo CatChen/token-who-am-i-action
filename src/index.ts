@@ -2,6 +2,7 @@ import type { ResultOf } from '@graphql-typed-document-node/core';
 import { getInput, notice, setFailed, setOutput } from '@actions/core';
 import { graphql } from './__graphql__/gql.js';
 import { getOctokit } from './getOctokit.js';
+import { type TokenKind, detectTokenKind } from './tokenKind.js';
 
 const queryViewerIdentity = graphql(`
   query ViewerIdentity {
@@ -38,6 +39,7 @@ export type User = {
   email?: string;
   scopes?: Array<string>;
   type: 'User';
+  tokenKind: TokenKind;
 };
 
 export type Bot = {
@@ -48,6 +50,7 @@ export type Bot = {
   name: string;
   email: string;
   type: 'Bot';
+  tokenKind: TokenKind;
 };
 
 export type Actor = User | Bot;
@@ -58,6 +61,10 @@ export async function tokenWhoAmI({
   githubToken: string;
 }): Promise<Actor> {
   const octokit = getOctokit(githubToken);
+  const tokenKind = detectTokenKind(githubToken);
+
+  notice(`Token Kind: ${tokenKind}`);
+  setOutput('token-kind', tokenKind);
 
   const {
     viewer: { login, globalId },
@@ -101,6 +108,7 @@ export async function tokenWhoAmI({
       email: email ?? undefined,
       scopes,
       type,
+      tokenKind,
     };
   } else if (type === 'Bot') {
     const { node } = await octokit.graphql<ResultOf<typeof queryBotAppSlug>>(
@@ -144,6 +152,7 @@ export async function tokenWhoAmI({
       name: botName,
       email: botEmail,
       type,
+      tokenKind,
     };
   } else {
     throw new Error(`Unsupported type: ${type}`);
