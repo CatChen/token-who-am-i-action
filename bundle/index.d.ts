@@ -1,3 +1,4 @@
+import { type TokenKind } from './tokenKind.js';
 export type User = {
     login: string;
     globalId: string;
@@ -12,6 +13,7 @@ export type User = {
     email?: string;
     scopes?: Array<string>;
     type: 'User';
+    tokenKind: TokenKind;
 };
 export type Bot = {
     login: string;
@@ -21,6 +23,7 @@ export type Bot = {
     name: string;
     email: string;
     type: 'Bot';
+    tokenKind: TokenKind;
 };
 export type Actor = User | Bot;
 export declare function tokenWhoAmI({ githubToken, }: {
