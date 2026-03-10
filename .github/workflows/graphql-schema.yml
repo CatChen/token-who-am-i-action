@@ -2,7 +2,7 @@ name: GraphQL Schema
 
 on:
   schedule:
-    - cron: '0 12 * * 0'
+    - cron: '0 * * * *'
   workflow_dispatch:
 
 concurrency:
@@ -81,6 +81,7 @@ jobs:
               --base main \
               --head "$BRANCH_NAME" \
               --title "Synchronized GitHub GraphQL schema" \
+              --body "Automated synchronization of the GitHub GraphQL schema and generated types." \
               --assignee CatChen \
               --reviewer CatChen \
               --label pass2ship
