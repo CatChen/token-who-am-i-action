@@ -1,4 +1,4 @@
-import { type TokenKind } from './tokenKind.js';
+import type { TokenKind } from './tokenKind.js';
 export type User = {
     login: string;
     globalId: string;
