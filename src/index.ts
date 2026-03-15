@@ -1,8 +1,9 @@
+import type { TokenKind } from './tokenKind.js';
 import type { ResultOf } from '@graphql-typed-document-node/core';
 import { getInput, notice, setFailed, setOutput } from '@actions/core';
 import { graphql } from './__graphql__/gql.js';
 import { getOctokit } from './getOctokit.js';
-import { type TokenKind, detectTokenKind } from './tokenKind.js';
+import { detectTokenKind } from './tokenKind.js';
 
 const queryViewerIdentity = graphql(`
   query ViewerIdentity {
