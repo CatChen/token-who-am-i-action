@@ -1,6 +1,6 @@
 {
   "name": "token-who-am-i-action",
-  "version": "2.0.15",
+  "version": "2.0.16",
   "description": "Retrieve identity information behind the GitHub token.",
   "license": "MIT",
   "repository": {
