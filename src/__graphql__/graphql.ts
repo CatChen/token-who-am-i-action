@@ -87,6 +87,7 @@ export type BotAppSlugQuery = {
     | { __typename: 'EnterpriseServerUserAccount'; id: string }
     | { __typename: 'EnterpriseServerUserAccountEmail'; id: string }
     | { __typename: 'EnterpriseServerUserAccountsUpload'; id: string }
+    | { __typename: 'EnterpriseTeam'; id: string }
     | { __typename: 'EnterpriseUserAccount'; id: string }
     | { __typename: 'Environment'; id: string }
     | { __typename: 'ExternalIdentity'; id: string }

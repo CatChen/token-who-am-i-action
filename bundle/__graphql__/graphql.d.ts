@@ -216,6 +216,9 @@ export type BotAppSlugQuery = {
         __typename: 'EnterpriseServerUserAccountsUpload';
         id: string;
     } | {
+        __typename: 'EnterpriseTeam';
+        id: string;
+    } | {
         __typename: 'EnterpriseUserAccount';
         id: string;
     } | {
