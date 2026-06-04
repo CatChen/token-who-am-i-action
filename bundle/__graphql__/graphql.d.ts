@@ -270,6 +270,12 @@ export type BotAppSlugQuery = {
         __typename: 'IssueFieldDateValue';
         id: string;
     } | {
+        __typename: 'IssueFieldMultiSelect';
+        id: string;
+    } | {
+        __typename: 'IssueFieldMultiSelectValue';
+        id: string;
+    } | {
         __typename: 'IssueFieldNumber';
         id: string;
     } | {

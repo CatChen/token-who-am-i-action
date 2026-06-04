@@ -105,6 +105,8 @@ export type BotAppSlugQuery = {
     | { __typename: 'IssueFieldChangedEvent'; id: string }
     | { __typename: 'IssueFieldDate'; id: string }
     | { __typename: 'IssueFieldDateValue'; id: string }
+    | { __typename: 'IssueFieldMultiSelect'; id: string }
+    | { __typename: 'IssueFieldMultiSelectValue'; id: string }
     | { __typename: 'IssueFieldNumber'; id: string }
     | { __typename: 'IssueFieldNumberValue'; id: string }
     | { __typename: 'IssueFieldRemovedEvent'; id: string }
