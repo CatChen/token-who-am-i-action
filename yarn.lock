@@ -18,15 +18,15 @@ __metadata:
   linkType: hard
 
 "@0no-co/graphqlsp@npm:^1.15.2":
-  version: 1.15.4
-  resolution: "@0no-co/graphqlsp@npm:1.15.4"
+  version: 1.16.0
+  resolution: "@0no-co/graphqlsp@npm:1.16.0"
   dependencies:
     "@gql.tada/internal": "npm:^1.0.0"
     graphql: "npm:^15.5.0 || ^16.0.0 || ^17.0.0"
   peerDependencies:
     graphql: ^15.5.0 || ^16.0.0 || ^17.0.0
     typescript: ^5.0.0 || ^6.0.0
-  checksum: 10c0/3cf8c26a08782c28b232c3b0425dcc6fea2cf60c8dce98e40501078d60a2cdd26fd6f84786d93e3298dffec32ffccc436180338e1002fac4d800d69cf44ca2ed
+  checksum: 10c0/7c2c588b16feb1102e3ca59177ed38b5df4f9fe45cb56ac14be8ca18b24303b0ed003fb33336bfc935a4f9c42c1e2eb9fe4452b4ba0e27125e036b1bbf39f9cb
   languageName: node
   linkType: hard
 
