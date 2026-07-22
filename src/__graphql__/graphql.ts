@@ -221,6 +221,8 @@ export type BotAppSlugQuery = {
     | { __typename: 'PullRequestReview'; id: string }
     | { __typename: 'PullRequestReviewComment'; id: string }
     | { __typename: 'PullRequestReviewThread'; id: string }
+    | { __typename: 'PullRequestStack'; id: string }
+    | { __typename: 'PullRequestStackEntry'; id: string }
     | { __typename: 'PullRequestThread'; id: string }
     | { __typename: 'Push'; id: string }
     | { __typename: 'PushAllowance'; id: string }

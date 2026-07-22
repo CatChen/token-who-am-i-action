@@ -591,6 +591,12 @@ export type BotAppSlugQuery = {
         __typename: 'PullRequestReviewThread';
         id: string;
     } | {
+        __typename: 'PullRequestStack';
+        id: string;
+    } | {
+        __typename: 'PullRequestStackEntry';
+        id: string;
+    } | {
         __typename: 'PullRequestThread';
         id: string;
     } | {
