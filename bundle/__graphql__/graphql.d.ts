@@ -543,6 +543,9 @@ export type BotAppSlugQuery = {
         __typename: 'ProjectV2ItemFieldIterationValue';
         id: string;
     } | {
+        __typename: 'ProjectV2ItemFieldMultiSelectValue';
+        id: string;
+    } | {
         __typename: 'ProjectV2ItemFieldNumberValue';
         id: string;
     } | {
@@ -556,6 +559,9 @@ export type BotAppSlugQuery = {
         id: string;
     } | {
         __typename: 'ProjectV2IterationField';
+        id: string;
+    } | {
+        __typename: 'ProjectV2MultiSelectField';
         id: string;
     } | {
         __typename: 'ProjectV2SingleSelectField';
