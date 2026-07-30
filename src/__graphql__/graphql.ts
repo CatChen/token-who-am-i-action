@@ -205,11 +205,13 @@ export type BotAppSlugQuery = {
     | { __typename: 'ProjectV2Item'; id: string }
     | { __typename: 'ProjectV2ItemFieldDateValue'; id: string }
     | { __typename: 'ProjectV2ItemFieldIterationValue'; id: string }
+    | { __typename: 'ProjectV2ItemFieldMultiSelectValue'; id: string }
     | { __typename: 'ProjectV2ItemFieldNumberValue'; id: string }
     | { __typename: 'ProjectV2ItemFieldSingleSelectValue'; id: string }
     | { __typename: 'ProjectV2ItemFieldTextValue'; id: string }
     | { __typename: 'ProjectV2ItemStatusChangedEvent'; id: string }
     | { __typename: 'ProjectV2IterationField'; id: string }
+    | { __typename: 'ProjectV2MultiSelectField'; id: string }
     | { __typename: 'ProjectV2SingleSelectField'; id: string }
     | { __typename: 'ProjectV2StatusUpdate'; id: string }
     | { __typename: 'ProjectV2View'; id: string }
