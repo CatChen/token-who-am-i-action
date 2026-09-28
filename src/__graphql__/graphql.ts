@@ -190,6 +190,11 @@ export type BotAppSlugQuery = {
     | { __typename: 'PackageVersion'; id: string }
     | { __typename: 'ParentIssueAddedEvent'; id: string }
     | { __typename: 'ParentIssueRemovedEvent'; id: string }
+    | { __typename: 'PendingAssigneeSuggestion'; id: string }
+    | { __typename: 'PendingCloseSuggestion'; id: string }
+    | { __typename: 'PendingFieldSuggestion'; id: string }
+    | { __typename: 'PendingLabelSuggestion'; id: string }
+    | { __typename: 'PendingTypeSuggestion'; id: string }
     | { __typename: 'PinnedDiscussion'; id: string }
     | { __typename: 'PinnedEnvironment'; id: string }
     | { __typename: 'PinnedEvent'; id: string }
