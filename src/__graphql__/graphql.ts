@@ -27,6 +27,7 @@ export type BotAppSlugQuery = {
     | { __typename: 'AddedToMergeQueueEvent'; id: string }
     | { __typename: 'AddedToProjectEvent'; id: string }
     | { __typename: 'AddedToProjectV2Event'; id: string }
+    | { __typename: 'AddedToStackEvent'; id: string }
     | { __typename: 'App'; id: string }
     | { __typename: 'AssignedEvent'; id: string }
     | { __typename: 'AutoMergeDisabledEvent'; id: string }
@@ -243,6 +244,7 @@ export type BotAppSlugQuery = {
     | { __typename: 'RemovedFromMergeQueueEvent'; id: string }
     | { __typename: 'RemovedFromProjectEvent'; id: string }
     | { __typename: 'RemovedFromProjectV2Event'; id: string }
+    | { __typename: 'RemovedFromStackEvent'; id: string }
     | { __typename: 'RenamedTitleEvent'; id: string }
     | { __typename: 'ReopenedEvent'; id: string }
     | { __typename: 'RepoAccessAuditEntry'; id: string }
