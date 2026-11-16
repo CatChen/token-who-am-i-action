@@ -201,6 +201,7 @@ export type BotAppSlugQuery = {
     | { __typename: 'PinnedEvent'; id: string }
     | { __typename: 'PinnedIssue'; id: string }
     | { __typename: 'PinnedIssueComment'; id: string }
+    | { __typename: 'PlanningStatus'; id: string }
     | { __typename: 'PrivateRepositoryForkingDisableAuditEntry'; id: string }
     | { __typename: 'PrivateRepositoryForkingEnableAuditEntry'; id: string }
     | { __typename: 'Project'; id: string }

@@ -531,6 +531,9 @@ export type BotAppSlugQuery = {
         __typename: 'PinnedIssueComment';
         id: string;
     } | {
+        __typename: 'PlanningStatus';
+        id: string;
+    } | {
         __typename: 'PrivateRepositoryForkingDisableAuditEntry';
         id: string;
     } | {
